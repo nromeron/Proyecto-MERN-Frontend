@@ -1,0 +1,53 @@
+@import "../../scss/index.scss";
+
+$widthSidebar: 200px;
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    max-height: 100vh;
+    background-color: $background-grey;
+
+    &__sidebar {
+        width: $widthSidebar;
+        background-color: $background-dark;
+
+        .logo {
+            height: 30px;
+            width: 100%;
+            margin: 10px 0;
+        }
+    }
+
+    &__content {
+        width: calc(100% - #{$widthSidebar});
+
+        &-header {
+            background-color: $background-dark;
+            color: $text-light;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 10px;
+        }
+
+        &-body {
+            padding: 20px;
+            overflow-y: auto;
+            padding-bottom: 60px; // Add padding to avoid content being hidden behind the footer
+        }
+    
+        &-footer {
+            background-color: $background-dark-web;
+            color: $text-light;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 10px;
+            position: fixed;
+            bottom: 0;
+        }
+    }
+}

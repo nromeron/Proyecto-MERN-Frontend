@@ -1,0 +1,19 @@
+@import "../../../../scss/index.scss";
+
+.users-form{
+
+    &__avatar{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+
+        .avatar-image {
+            margin: 0;
+            border: 2px dashed $primary;
+            padding: 5px;
+            cursor: pointer;
+        }
+    }
+}
+

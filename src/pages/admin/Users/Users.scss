@@ -1,0 +1,11 @@
+.users-page{
+    &__add{
+        right: 15px;
+        top: 10%;
+        position: absolute;
+
+        >.ui.button{
+            margin: 0;
+        }
+    }
+}
