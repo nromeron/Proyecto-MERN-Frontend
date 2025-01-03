@@ -3,6 +3,7 @@ import { MenuApi } from "../../../../api/indexApi";
 import { Loader } from 'semantic-ui-react';
 import { map, size } from 'lodash';
 import { useAuth } from '../../../../Hooks/useAuth';
+import { MenuItem } from '../MenuItem/MenuItem';
 
 const menuController = new MenuApi();
 
@@ -15,9 +16,9 @@ export function ListMenu(props) {
     useEffect(() => {
         (async () => {
             try {
+                setMenus(null);
                 const response = await menuController.getAllMenus(accessToken, active);
                 setMenus(response);
-                console.log(response);
             } catch (error) {
                 console.error(error);
             }
@@ -33,10 +34,8 @@ export function ListMenu(props) {
     }
 
     return ( map(menus, (menu) => (
-        //<Menu key={menu._id} menu={menu} />
-        <div key={menu._id}>{menu.name }</div>
-        
+            <MenuItem key={menu._id} menu={menu} />
+            )
         )
-    )
     )
 }

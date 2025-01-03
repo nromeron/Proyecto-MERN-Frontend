@@ -1,6 +1,24 @@
 import {ENV} from "../utils/index";
 
 export class MenuApi {
+
+    async createMenu(accessToken, menuData) {
+        const data = menuData;
+        const formData = new FormData();
+        Object.keys(data).forEach((key) => {
+            formData.append(key, data[key]);
+        });
+        formData.append("active", true);
+        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.CREATEMENU}`;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                authorization: `Bearer ${accessToken}`
+            },
+            body: formData
+        });
+        return await response.json();
+    }
     
     async getAllMenus(accessToken, active = undefined) {
         const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETALLMENUS}?active=${active}`;

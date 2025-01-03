@@ -1,7 +1,7 @@
 import React, {} from 'react';
 import { Tab, Button } from 'semantic-ui-react';
 import "./Menu.scss";
-import { ListMenu } from "../../../Components/Admin/Menu/ListMenu/ListMenu";
+import { ListMenu } from '../../../Components/Admin/Menu/MenuList/ListMenu';
 
 export function Menu() {
 
