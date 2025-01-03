@@ -10,6 +10,11 @@ export const ENV = {
         CREATEUSER: "/user/createUser",
         GETALLUSERS: "/user/all",
         USER: "user",
+        GETALLMENUS: "/menu/all",
+        GETMENU: "/menu",
+        CREATEMENU: "/menu/create",
+        UPDATEMENU: "/menu/update",
+        DELETEMENU: "/menu/delete",
     },
     JWT: {
         ACCESS: "access",
