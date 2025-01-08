@@ -1,12 +1,10 @@
-import React, {useCallback, useState} from 'react';
+import React, { useState} from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import "./MenuForm.scss";
 import { MenuApi } from '../../../../api/apiMenu';
 import { useAuth } from '../../../../Hooks/useAuth';
 import { initialValues, validationSchema } from './MenuForm.form';
-import { useDropzone } from 'react-dropzone';
-import { ENV } from '../../../../utils';
 
 const menuController = new MenuApi();
 
@@ -23,8 +21,10 @@ export function MenuForm(props) {
         onSubmit: async (formValue) => {
         try {
             if (!menu) {
+                console.log("entro en crear")
             await menuController.createMenu(accessToken, formValue);
             } else {
+                console.log("entro en editar")
             await menuController.updateMenu(accessToken, menu._id, formValue);
             }
             close();
@@ -35,65 +35,49 @@ export function MenuForm(props) {
         },
     });
     
-    const onDrop = useCallback((acceptedFiles) => {
-        const file = acceptedFiles[0];
-        formik.setFieldValue("image", URL.createObjectURL(file));
-        formik.setFieldValue("fileImage", file);
-    }, [formik]);
     
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: { "image/jpeg": [".jpg", ".jpeg"], "image/png": [".png"] },
-        onDrop
-    });
-    
-    const getImage = () => {
-        if (formik.values.fileImage) {
-        return formik.values.image;
-        }
-        if (menu) {
-        return `${ENV.urlImages}/${menu.image}`;
-        }
-        return `${ENV.urlImages}/no-image.png`;
-    }
     
     return (
-        <Modal open={true} onClose={close}>
-        <Modal.Header>
-            {menu ? `Editar ${menu.name}` : "Nuevo Menu"}
-        </Modal.Header>
-        <Modal.Content>
             <Form onSubmit={formik.handleSubmit}>
-            <Form.Field>
-                <div {...getRootProps()} className="dropzone" style={{ backgroundImage: `url(${getImage()})` }}>
-                <input {...getInputProps()} />
-                </div>
-            </Form.Field>
-            <Form.Field>
-                <label>Nombre</label>
-                <input type="text" {...formik.getFieldProps("name")} />
-                {formik.touched.name && formik.errors.name ? (
-                <div className="error">{formik.errors.name}</div>
-                ) : null}
-            </Form.Field>
-            <Form.Field>
-                <label>Precio</label>
-                <input type="number" {...formik.getFieldProps("price")} />
-                {formik.touched.price && formik.errors.price ? (
-                <div className="error
-                ">{formik.errors.price}</div>
-                ) : null}
-            </Form.Field>
-            <Form.Field>
-                <label>Descripción</label>
-                <textarea {...formik.getFieldProps("description")} />
-                {formik.touched.description && formik.errors.description ? (
-                <div className="error">{formik.errors.description}</div>
-                ) : null}
-            </Form.Field>
+                <Form.Group widths="equal">
+                    <Form.Input
+                      name="title"
+                      label="Titulo"
+                      placeholder="Titulo"
+                      onChange={formik.handleChange}
+                      value={formik.values.title}
+                      error={formik.errors.title}
+                    />
+                    <Form.Input
+                      name="path"
+                      label="Path"
+                      placeholder="Path"
+                      onChange={formik.handleChange}
+                      value={formik.values.path}
+                      error={formik.errors.path}
+                    />
+                </Form.Group>
+                <Form.Group widths="equal">
+                    <Form.Input
+                      name="description"
+                      label="Descripción"
+                      placeholder="Descripción"
+                      onChange={formik.handleChange}
+                      value={formik.values.description}
+                      error={formik.errors.description}
+                    />
+                </Form.Group>
+
+                <Form.Checkbox 
+                        name='active' 
+                        label="Activar"
+                        onChange={(_, data) => formik.setFieldValue("active", data.checked)} 
+                        checked = {formik.values.active}
+                        error={formik.errors.active}
+                    />
+            
             <Button type="submit">Guardar</Button>
-            </Form>
             {error && <div className="error">{error}</div>}
-        </Modal.Content>
-        </Modal>
+            </Form>
     );
 }

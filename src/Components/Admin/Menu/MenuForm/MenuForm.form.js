@@ -15,7 +15,7 @@ export function validationSchema(menu) {
         title: Yup.string().required(true),
         description: Yup.string().required(true),
         path: Yup.string().required(true),
-        order: Yup.number().required(true),
+        order: Yup.number(),
         active: Yup.boolean().required(true),
     });
 }
