@@ -9,7 +9,7 @@ const menuController = new MenuApi();
 
 export function ListMenu(props) {
 
-    const { active } = props;
+    const { active, onReload, reload } = props;
     const [menus, setMenus] = useState(null);
     const { accessToken } = useAuth();
 
@@ -23,7 +23,7 @@ export function ListMenu(props) {
                 console.error(error);
             }
         })();
-    }, [active, accessToken]);
+    }, [active, accessToken, reload]);
 
     if (!menus) {
         return <Loader active inline="centered"/>
@@ -34,7 +34,7 @@ export function ListMenu(props) {
     }
 
     return ( map(menus, (menu) => (
-            <MenuItem key={menu._id} menu={menu} />
+            <MenuItem key={menu._id} menu={menu} onReload = {onReload} />
             )
         )
     )

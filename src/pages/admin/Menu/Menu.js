@@ -7,8 +7,8 @@ import { MenuForm } from '../../../Components/Admin/Menu/MenuForm/MenuForm';
 
 export function Menu() {
 
-    const [showModal, setShowModal] = useState(false);
-    const [reload, setReload] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [reload, setReload] = useState(false);
 
   const openModal = () => setShowModal(prevState => !prevState);
   const onReload = () => setReload(prevState => !prevState);
@@ -42,7 +42,7 @@ const panels = [
         <Tab menu={{ secondary: true, pointing: true }} panes={panels} />
       </div>
         <BasicModal show={showModal} onClose={openModal} title="Crear nuevo menu">
-              <MenuForm close={openModal} onReload={onReload} />
+            <MenuForm close={openModal} onReload={onReload} />
         </BasicModal>
     </>
   )

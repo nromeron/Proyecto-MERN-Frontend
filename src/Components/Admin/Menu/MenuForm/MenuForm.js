@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Button, Form, Modal } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import "./MenuForm.scss";
 import { MenuApi } from '../../../../api/apiMenu';

@@ -3,7 +3,7 @@ import { MenuApi } from '../../../../api/apiMenu';
 import { Button, Confirm } from 'semantic-ui-react';
 import { useAuth } from '../../../../Hooks/useAuth';
 import { BasicModal } from '../../../SharedComponents/BasicModal';
-import { ENV } from '../../../../utils';
+//import { ENV } from '../../../../utils';
 import { MenuForm } from '../MenuForm/MenuForm';
 import './MenuItem.scss';
 
@@ -51,7 +51,7 @@ export function MenuItem(props) {
 
     const menuActivation = async () => {
         try {
-            await menuController.updateMenu(menu._id, accessToken, !menu.active);
+            await menuController.updateMenu(accessToken, menu._id, {active: !menu.active});
             onReload();
             openConfirm();
         } catch (error) {
