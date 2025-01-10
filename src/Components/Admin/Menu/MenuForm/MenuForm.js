@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Dropdown, Input } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import "./MenuForm.scss";
 import { MenuApi } from '../../../../api/apiMenu';
@@ -13,6 +13,12 @@ export function MenuForm(props) {
     const { close, onReload, menu } = props;
     const { accessToken } = useAuth();
     const [error, setError] = useState("");
+
+    const options = [
+        { key: "https://", text: "https://", value: "https://" },
+        { key: "http://", text: "http://", value: "http://" },
+        { key: "/", text: "/", value: "/" },
+      ];
     
     const formik = useFormik({
         initialValues: initialValues(menu),
@@ -20,13 +26,18 @@ export function MenuForm(props) {
         validateOnChange: false,
         onSubmit: async (formValue) => {
         try {
-            if (!menu) {
-                console.log("entro en crear")
-            await menuController.createMenu(accessToken, formValue);
-            } else {
-                console.log("entro en editar")
-            await menuController.updateMenu(accessToken, menu._id, formValue);
-            }
+            const data = {
+                title: formValue.title,
+                path: `${formValue.protocol}${formValue.path}`,
+                order: formValue.order,
+                active: formValue.active,
+              };
+              if (menu) {
+                data.path = formValue.path;
+                await menuController.updateMenu(accessToken, menu._id, data);
+              } else {
+                await menuController.createMenu(accessToken, data);
+              }
             close();
             onReload();
         } catch (error) {
@@ -49,12 +60,13 @@ export function MenuForm(props) {
                       error={formik.errors.title}
                     />
                     <Form.Input
-                      name="path"
-                      label="Path"
-                      placeholder="Path"
-                      onChange={formik.handleChange}
-                      value={formik.values.path}
-                      error={formik.errors.path}
+                        name="order"
+                        label="Orden"
+                        type="number"
+                        placeholder="Orden"
+                        onChange={formik.handleChange}
+                        value={formik.values.order}
+                        error={formik.errors.order}
                     />
                 </Form.Group>
                 <Form.Group widths="equal">
@@ -66,8 +78,8 @@ export function MenuForm(props) {
                       value={formik.values.description}
                       error={formik.errors.description}
                     />
+                    
                 </Form.Group>
-
                 <Form.Checkbox 
                         name='active' 
                         label="Activar"
@@ -75,8 +87,30 @@ export function MenuForm(props) {
                         checked = {formik.values.active}
                         error={formik.errors.active}
                     />
+                    <Input
+                    name="path"
+                    placeholder="URL"
+                    fluid
+                    onChange={formik.handleChange}
+                    value={formik.values.path}
+                    error={formik.errors.path}
+                    label={
+                    !menu ? (
+                        <Dropdown
+                        options={options}
+                        onChange={(_, data) =>
+                            formik.setFieldValue("protocol", data.value)
+                        }
+                        value={formik.values.protocol}
+                        error={formik.errors.protocol}
+                        />
+                    ) : null
+                    }
+                />
             
-            <Button type="submit">Guardar</Button>
+            <Button type="submit" primary fluid loading={formik.isSubmitting}>
+                {menu ? "Actualizar menú" : "Crear menú"}
+            </Button>
             {error && <div className="error">{error}</div>}
             </Form>
     );
