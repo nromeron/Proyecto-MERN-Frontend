@@ -28,6 +28,7 @@ export function MenuForm(props) {
         try {
             const data = {
                 title: formValue.title,
+                description: formValue.description,
                 path: `${formValue.protocol}${formValue.path}`,
                 order: formValue.order,
                 active: formValue.active,
@@ -107,7 +108,9 @@ export function MenuForm(props) {
                     ) : null
                     }
                 />
-            
+
+                
+            <br></br>
             <Button type="submit" primary fluid loading={formik.isSubmitting}>
                 {menu ? "Actualizar menú" : "Crear menú"}
             </Button>
