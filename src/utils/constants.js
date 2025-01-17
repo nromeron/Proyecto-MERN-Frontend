@@ -15,6 +15,10 @@ export const ENV = {
         CREATEMENU: "menu/create",
         UPDATEMENU: "menu/update",
         DELETEMENU: "menu/delete",
+        GETALLCOURSES: "course/all",
+        UPDATECOURSE: "course/update",
+        DELETECOURSE: "course/delete",
+        CREATECOURSE: "course/create",
     },
     JWT: {
         ACCESS: "access",

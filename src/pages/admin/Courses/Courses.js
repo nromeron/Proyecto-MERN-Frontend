@@ -33,12 +33,17 @@ export function Courses() {
   ];
 
   return (
-    <div className="courses-page">
-      <Button className="courses-page__add" onClick={openModal}>Crear nuevo curso</Button>
-      <BasicModal show={showModal} onClose={openModal}>
+    <>
+      <div className="courses-page">
+        <Button className="courses-page__add" primary onClick={openModal}>
+          Crear nuevo curso
+          </Button>
+          <h1>Cursos</h1>
+        <Tab menu={{ secondary: true, pointing: true }} panes={panels} />
+      </div>
+      <BasicModal show={showModal} onClose={openModal} title="Crear nuevo usuario">
         <CourseForm close={openModal} onReload={onReload} />
       </BasicModal>
-      <Tab panes={panels} />
-    </div>
+    </>
   );
 }

@@ -7,7 +7,7 @@ import {useAuth} from "../../../../Hooks/useAuth.js"
 
 const courseApi = new CourseApi();
 
-export default function CourseForm({ close, onReload }) {
+export function CourseForm({ close, onReload }) {
   const { accessToken } = useAuth();
 
   const formik = useFormik({

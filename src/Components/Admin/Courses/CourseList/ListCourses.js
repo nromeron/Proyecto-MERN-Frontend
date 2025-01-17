@@ -1,31 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { CourseApi } from '../../../../api/apiCourse.js';
 import { useAuth } from "../../../../Hooks/useAuth.js"
-import { List, Button } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
+import { map, size } from 'lodash';
+import {CourseItem} from "../../../../Components/Admin/Courses/indexCourse.js"
 
 const courseApi = new CourseApi();
 
-export function ListCourses({ active, reload, onReload }) {
+export function ListCourses(props) {
+  const {active, reload, onReload} = props;
   const { accessToken } = useAuth();
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState(null);
 
   useEffect(() => {
     (async () => {
-      const response = await courseApi.getAllCourses(accessToken, active);
-      setCourses(response);
+      try {
+        setCourses(null);
+        const response = await courseApi.getAllCourses(accessToken, active);
+        setCourses(response.docs);
+      } catch (error) {
+        console.log(error)
+      }
     })();
-  }, [reload, ]);
+  }, [active, accessToken, reload]);
 
-  return (
-    <List>
-      {courses.map(course => (
-        <List.Item key={course._id}>
-          <List.Content>
-            <List.Header>{course.title}</List.Header>
-            <List.Description>{course.description}</List.Description>
-          </List.Content>
-        </List.Item>
-      ))}
-    </List>
-  );
+  console.log(courses)
+
+  if (!courses) {
+          return <Loader active inline="centered"/>
+      }
+      if (size(courses) === 0) {
+          return <h3>No hay cursos</h3>
+      }
+
+  return ( map(courses, (course) => (
+          <CourseItem key={course._id} course={course} onReload = {onReload} />
+          )
+      )
+    )
 }

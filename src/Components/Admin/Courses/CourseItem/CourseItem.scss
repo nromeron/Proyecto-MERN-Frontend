@@ -1,0 +1,41 @@
+@import "../../../../scss/index.scss";
+
+.course-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+
+    &:last-of-type{
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+
+        & > .ui.image {
+            width: 70px !important;
+            height: 70px !important;
+            margin-right: 10px !important;
+        }
+
+        p {
+        margin: 0;
+
+        &:first-of-type {
+            font-weight: bold;
+            }
+            &:last-of-type {
+                color: #777;
+                opacity: 0.8;
+            }
+        }
+    }
+
+  }

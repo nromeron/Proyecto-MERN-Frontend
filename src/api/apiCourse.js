@@ -2,8 +2,8 @@ import {ENV} from "../utils/index";
 
 export class CourseApi {
 
-    async getAllCourses(accessToken, active = undefined) {
-        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETALLUSERS}?active=${active}`;
+    async getAllCourses(accessToken, active) {
+        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETALLCOURSES}?active=${active}`;
         const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -14,7 +14,7 @@ export class CourseApi {
         return result;
     }
 
-    async getUser(accessToken) {
+    async getCourse(accessToken) {
         const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETUSER}`;
         const response = await fetch(url, {
             method: "GET",
@@ -25,7 +25,7 @@ export class CourseApi {
         return await response.json();
     }
 
-    async updateUser(accessToken, idUser, userData) {
+    /* async updateCourse(accessToken, idUser, userData) {
           const data = userData;
           if (!data.password) {
             delete data.password;
@@ -49,10 +49,10 @@ export class CourseApi {
                 body: formData
             });
             return await response.json();
-      }
+      } */
 
-    async deleteUser(idUser, accessToken) {
-        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.USER}/${idUser}`;
+    async deleteCourse(idCourse, accessToken) {
+        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.DELETECOURSE}/${idCourse}`;
         const response = await fetch(url, {
             method: "DELETE",
             headers: {
@@ -62,7 +62,7 @@ export class CourseApi {
         return await response.json();
     }
 
-    async createUser(accessToken ,data) {
+    /* async createCourse(accessToken ,data) {
         try {
             const formData = new FormData();
             Object.keys(data).forEach((key) => {
@@ -86,5 +86,5 @@ export class CourseApi {
         } catch (error) {   
             throw error;
         }
-    }
-}
+    }*/
+} 
