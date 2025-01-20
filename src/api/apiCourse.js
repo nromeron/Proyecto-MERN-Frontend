@@ -2,8 +2,8 @@ import {ENV} from "../utils/index";
 
 export class CourseApi {
 
-    async getAllCourses(accessToken, active) {
-        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETALLCOURSES}?active=${active}`;
+    async getAllCourses(accessToken) {
+        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETALLCOURSES}`;
         const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -25,11 +25,8 @@ export class CourseApi {
         return await response.json();
     }
 
-    /* async updateCourse(accessToken, idUser, userData) {
+    async updateCourse(accessToken, idUser, userData) {
           const data = userData;
-          if (!data.password) {
-            delete data.password;
-          }
     
           const formData = new FormData();
           Object.keys(data).forEach((key) => {
@@ -49,7 +46,7 @@ export class CourseApi {
                 body: formData
             });
             return await response.json();
-      } */
+      } 
 
     async deleteCourse(idCourse, accessToken) {
         const url = `${ENV.BASE_API}/${ENV.API_ROUTES.DELETECOURSE}/${idCourse}`;
@@ -62,18 +59,18 @@ export class CourseApi {
         return await response.json();
     }
 
-    /* async createCourse(accessToken ,data) {
+    async createCourse(accessToken ,data) {
         try {
             const formData = new FormData();
             Object.keys(data).forEach((key) => {
                 formData.append(key, data[key]);
             });
 
-            if (data.fileAvatar) {
-                formData.append("avatar", data.fileAvatar);
+            if (data.miniature) {
+                formData.append("avatar", data.miniature);
             }
 
-            const url = `${ENV.BASE_API}/${ENV.API_ROUTES.CREATEUSER}`;
+            const url = `${ENV.BASE_API}/${ENV.API_ROUTES.CREATECOURSE}`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -86,5 +83,5 @@ export class CourseApi {
         } catch (error) {   
             throw error;
         }
-    }*/
+    }
 } 

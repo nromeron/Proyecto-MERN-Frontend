@@ -15,18 +15,10 @@ export function Courses() {
 
   const panels = [
     {
-      menuItem: 'Cursos activos',
+      menuItem: 'Cursos Disponibles',
       render: () => (
         <Tab.Pane attached={false}>
           <ListCourses active={true} reload={reload} onReload={onReload} />
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: 'Cursos inactivos',
-      render: () => (
-        <Tab.Pane attached={false}>
-          <ListCourses active={false} reload={reload} onReload={onReload} />
         </Tab.Pane>
       ),
     },
@@ -41,7 +33,7 @@ export function Courses() {
           <h1>Cursos</h1>
         <Tab menu={{ secondary: true, pointing: true }} panes={panels} />
       </div>
-      <BasicModal show={showModal} onClose={openModal} title="Crear nuevo usuario">
+      <BasicModal show={showModal} onClose={openModal} title="Crear nuevo curso">
         <CourseForm close={openModal} onReload={onReload} />
       </BasicModal>
     </>

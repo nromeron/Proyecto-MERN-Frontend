@@ -7,12 +7,13 @@ import {useAuth} from "../../../../Hooks/useAuth.js"
 
 const courseApi = new CourseApi();
 
-export function CourseForm({ close, onReload }) {
+export function CourseForm(props) {
+  const { close, onReload, course } = props;
   const { accessToken } = useAuth();
 
   const formik = useFormik({
-    initialValues: initialValues(),
-    validationSchema: validationSchema(),
+    initialValues: initialValues(course),
+    validationSchema: validationSchema(course),
     onSubmit: async (formValue) => {
       try {
         await courseApi.createCourse(accessToken, formValue);
@@ -28,6 +29,7 @@ export function CourseForm({ close, onReload }) {
     <Form className="course-form" onSubmit={formik.handleSubmit}>
       <Form.Input
         name="title"
+        label="Titulo"
         placeholder="Título del curso"
         onChange={formik.handleChange}
         value={formik.values.title}
@@ -35,10 +37,37 @@ export function CourseForm({ close, onReload }) {
       />
       <Form.Input
         name="description"
+        label="Descripción"
         placeholder="Descripción del curso"
         onChange={formik.handleChange}
         value={formik.values.description}
         error={formik.errors.description}
+      />
+      <Form.Input
+        name="url"
+        label="URL"
+        placeholder="Url del curso"
+        onChange={formik.handleChange}
+        value={formik.values.description}
+        error={formik.errors.description}
+      />
+      <Form.Input
+        name="price"
+        label="Precio"
+        type="number"
+        placeholder="Precio"
+        onChange={formik.handleChange}
+        value={formik.values.order}
+        error={formik.errors.order}
+      />
+      <Form.Input
+        name="score"
+        label="Calificación"
+        type="number"
+        placeholder="Calificación"
+        onChange={formik.handleChange}
+        value={formik.values.order}
+        error={formik.errors.order}
       />
       <Button type="submit" primary fluid loading={formik.isSubmitting}>
         Crear curso

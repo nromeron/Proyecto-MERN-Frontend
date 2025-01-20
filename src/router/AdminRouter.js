@@ -32,9 +32,9 @@ export function AdminRouter() { // create a new component called AdminRouter
               element = {loadLayout(AdminLayout, AdminBlog)}/>
             ))}
             <Route path="/admin/users" element = {loadLayout(AdminLayout, Users)}/>
-            <Route path="/admin/Courses" element = {loadLayout(AdminLayout, Courses)}/>
-            <Route path="/admin/Menu" element = {loadLayout(AdminLayout, Menu)}/>
-            <Route path="/admin/Newsletter" element = {loadLayout(AdminLayout, Newsletter)}/>
+            <Route path="/admin/courses" element = {loadLayout(AdminLayout, Courses)}/>
+            <Route path="/admin/menu" element = {loadLayout(AdminLayout, Menu)}/>
+            <Route path="/admin/newsletter" element = {loadLayout(AdminLayout, Newsletter)}/>
           </>
       )}
     </Routes>
