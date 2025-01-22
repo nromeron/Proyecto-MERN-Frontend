@@ -2,20 +2,19 @@ import {ENV} from "../utils/index";
 
 export class CourseApi {
 
-    async getAllCourses(accessToken) {
-        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETALLCOURSES}`;
+    async getAllCourses(params) {
+        const pageFilter = `page=${params?.page || 1}`;
+        const limitFilter = `limit=${params?.limit || 10}`;
+        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETALLCOURSES}?${pageFilter}&${limitFilter}`;
         const response = await fetch(url, {
             method: "GET",
-            headers: {
-                authorization: `Bearer ${accessToken}`
-            }
         });
         const result = await response.json();
         return result;
     }
 
     async getCourse(accessToken) {
-        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETUSER}`;
+        const url = `${ENV.BASE_API}/${ENV.API_ROUTES.GETALLCOURSES}`;
         const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -37,7 +36,7 @@ export class CourseApi {
             formData.append("avatar", data.fileAvatar);
           }
     
-            const url = `${ENV.BASE_API}/${ENV.API_ROUTES.USER}/${idUser}`;
+            const url = `${ENV.BASE_API}/${ENV.API_ROUTES.UPDATECOURSE}/${idUser}`;
             const response = await fetch(url, {
                 method: "PATCH",
                 headers: {

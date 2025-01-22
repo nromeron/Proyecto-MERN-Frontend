@@ -1,41 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import { CourseApi } from '../../../../api/apiCourse.js';
-import { useAuth } from "../../../../Hooks/useAuth.js"
-import { Loader } from 'semantic-ui-react';
+import { Loader, Pagination } from 'semantic-ui-react';
 import { map, size } from 'lodash';
 import {CourseItem} from "../../../../Components/Admin/Courses/indexCourse.js"
 
-const courseApi = new CourseApi();
+const courseController = new CourseApi();
 
 export function ListCourses(props) {
-  const {active, reload, onReload} = props;
-  const { accessToken } = useAuth();
-  const [courses, setCourses] = useState(null);
+  const { reload, onReload } = props;
+  const [courses, setCourses] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState();
 
   useEffect(() => {
     (async () => {
       try {
-        setCourses(null);
-        const response = await courseApi.getAllCourses(accessToken, active);
+        const response = await courseController.getCourses({ page });
         setCourses(response.docs);
+        setPagination({
+          limit: response.limit,
+          page: response.page,
+          pages: response.pages,
+          total: response.total,
+        });
       } catch (error) {
-        console.log(error)
+        console.error(error);
       }
     })();
-  }, [active, accessToken, reload]);
+  }, [page, reload]);
 
-  console.log(courses)
+  const changePage = (_, data) => {
+    setPage(data.activePage);
+  };
 
-  if (!courses) {
-          return <Loader active inline="centered"/>
-      }
-      if (size(courses) === 0) {
-          return <h3>No hay cursos</h3>
-      }
+  if (!courses) return <Loader active inline="centered" />;
+  if (size(courses) === 0) return "No hay ningun curso";
 
-  return ( map(courses, (course) => (
-          <CourseItem key={course._id} course={course} onReload = {onReload} />
-          )
-      )
-    )
+  return (
+    <div className="list-courses">
+      {map(courses, (course) => (
+        <CourseItem key={course._id} course={course} onReload={onReload} />
+      ))}
+
+      <div className="list-courses__pagination">
+        <Pagination
+          totalPages={pagination.pages}
+          defaultActivePage={pagination.page}
+          ellipsisItem={null}
+          firstItem={null}
+          lastItem={null}
+          onPageChange={changePage}
+        />
+      </div>
+    </div>
+  );
 }
