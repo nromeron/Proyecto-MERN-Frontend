@@ -30,12 +30,6 @@ export function CourseItem(props) {
         openModal();
     }
 
-    const openActivationConfirm = () => {
-        setIsDelete(false);
-        setconfirmMessage(course.active ? `¿Desactivar ${course.title}?` : `¿Activar ${course.title}?`);
-        openConfirm();
-    }
-
     const openDeleteConfirm = () => {
         setIsDelete(true);
         setconfirmMessage(`¿Eliminar ${course.title}?`);
@@ -66,7 +60,7 @@ export function CourseItem(props) {
     <>
     <div className="course-item">
         <div className="course-item__info">
-            <Image src={course.miniature ? `${ENV.BASE_PATH}/${course.miniature}` :'https://react.semantic-ui.com/images/avatar/small/matt.jpg'} avatar />
+        <Image src={`${ENV.BASE_PATH}/${course.miniature}`} />
                 <div>
                     <p>{course.title}</p>
                     <p>{course.description}</p>
@@ -76,11 +70,11 @@ export function CourseItem(props) {
                 </div>
         </div>
         <div className="user-item__actions">
-            <Button icon primary onClick={handleEdit}>
-                <Icon name="pencil alternate" />
+            <Button icon as="a" href={course.url} target="_blank">
+                <Icon name="eye" />
             </Button>
-            <Button icon color={course.active ? 'orange' : 'teal'} onClick={openActivationConfirm}>
-                <Icon name={course.active ? "ban" : "check"} />
+            <Button icon primary onClick={handleEdit}>
+                <Icon name="pencil" />
             </Button>
             <Button icon color="red" onClick={openDeleteConfirm}>
                 <Icon name="trash" />
@@ -92,7 +86,12 @@ export function CourseItem(props) {
         <CourseForm close={openModal} onReload={onReload} course={course} />
     </BasicModal>
 
-    <Confirm open={showConfirm} onCancel={openConfirm} onConfirm={isDelete? courseDelete :courseActivation } content={confirmMessage} size='mini' />
+    <Confirm 
+        open={showConfirm} 
+        onCancel={openConfirm} 
+        onConfirm={isDelete? courseDelete :courseActivation }
+        content={confirmMessage} 
+        size='mini' />
     </>
 
 

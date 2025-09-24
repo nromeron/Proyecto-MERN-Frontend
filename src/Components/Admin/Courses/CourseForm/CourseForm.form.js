@@ -1,3 +1,5 @@
+// Desc: Formik form for CourseForm component
+
 import * as Yup from "yup";
 
 export function initialValues(course) {
@@ -9,6 +11,7 @@ export function initialValues(course) {
     url: course?.url || "",
     price: course?.price || undefined,
     score: course?.score || undefined,
+    active: course?.active || true,
   };
 }
 

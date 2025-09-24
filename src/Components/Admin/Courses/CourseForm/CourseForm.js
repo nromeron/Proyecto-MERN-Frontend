@@ -1,11 +1,12 @@
 import React, {useCallback} from 'react';
 import { useFormik } from 'formik';
 import { useDropzone } from "react-dropzone";
-import { Form, Button, Image } from 'semantic-ui-react';
+import { Form, Image } from 'semantic-ui-react';
 import { initialValues, validationSchema } from './CourseForm.form.js';
 import { CourseApi } from '../../../../api/apiCourse.js';
 import {useAuth} from "../../../../Hooks/useAuth.js";
 import { ENV } from "../../../../utils";
+import "./CourseForm.scss";
 
 const courseController = new CourseApi();
 
@@ -50,6 +51,7 @@ export function CourseForm(props) {
     if (formik.values.file) {
       return formik.values.miniature;
     } else if (formik.values.miniature) {
+      console.log(formik.values.miniature);
       return `${ENV.BASE_PATH}/${formik.values.miniature}`;
     }
     return null;

@@ -3,6 +3,7 @@ import { CourseApi } from '../../../../api/apiCourse.js';
 import { Loader, Pagination } from 'semantic-ui-react';
 import { map, size } from 'lodash';
 import {CourseItem} from "../../../../Components/Admin/Courses/indexCourse.js"
+import "./CourseList.scss";
 
 const courseController = new CourseApi();
 
@@ -15,7 +16,7 @@ export function ListCourses(props) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await courseController.getCourses({ page });
+        const response = await courseController.getAllCourses({ page });
         setCourses(response.docs);
         setPagination({
           limit: response.limit,
